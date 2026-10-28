@@ -8,6 +8,9 @@ export const products = [
     image: "/images/products/01_phoenix.webp",
     imagePng: "/images/products/01_phoenix.png",
     accent: "#ff6700",
+    demoPriceInr: 5499,
+    availableSizes: [6, 7, 8, 9, 10, 11],
+    unavailableSizes: [11],
   },
   {
     id: "nova",
@@ -18,6 +21,9 @@ export const products = [
     image: "/images/products/02_nova.webp",
     imagePng: "/images/products/02_nova.png",
     accent: "#ff7d38",
+    demoPriceInr: 5799,
+    availableSizes: [6, 7, 8, 9, 10, 11],
+    unavailableSizes: [6],
   },
   {
     id: "stealth",
@@ -28,6 +34,9 @@ export const products = [
     image: "/images/products/03_stealth.webp",
     imagePng: "/images/products/03_stealth.png",
     accent: "#9b9d9b",
+    demoPriceInr: 4999,
+    availableSizes: [6, 7, 8, 9, 10, 11],
+    unavailableSizes: [10],
   },
   {
     id: "terra",
@@ -38,6 +47,9 @@ export const products = [
     image: "/images/products/04_terra.webp",
     imagePng: "/images/products/04_terra.png",
     accent: "#a2a574",
+    demoPriceInr: 6299,
+    availableSizes: [6, 7, 8, 9, 10, 11],
+    unavailableSizes: [7],
   },
   {
     id: "raptor",
@@ -48,5 +60,8 @@ export const products = [
     image: "/images/products/05_raptor.webp",
     imagePng: "/images/products/05_raptor.png",
     accent: "#e44c43",
+    demoPriceInr: 5999,
+    availableSizes: [6, 7, 8, 9, 10, 11],
+    unavailableSizes: [8],
   },
 ];

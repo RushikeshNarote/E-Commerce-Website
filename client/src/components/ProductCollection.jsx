@@ -1,6 +1,13 @@
 import ProductCard from "./ProductCard.jsx";
 
-function ProductCollection({ products, onProductSelect, searchQuery }) {
+function ProductCollection({
+  onAddToCart,
+  onBuyNow,
+  onProductSelect,
+  products,
+  reviewSummaries,
+  searchQuery,
+}) {
   return (
     <section className="collection section-wrap" id="collection" aria-labelledby="collection-title">
       <div className="section-heading">
@@ -20,8 +27,11 @@ function ProductCollection({ products, onProductSelect, searchQuery }) {
           {products.map((product) => (
             <ProductCard
               key={product.id}
+              onAddToCart={onAddToCart}
+              onBuyNow={onBuyNow}
               onDetails={() => onProductSelect(product)}
               product={product}
+              reviewSummary={reviewSummaries[product.id]}
             />
           ))}
         </div>
@@ -30,6 +40,10 @@ function ProductCollection({ products, onProductSelect, searchQuery }) {
           No colorways match “{searchQuery}”. Try a product name or color.
         </p>
       )}
+      <p className="collection-demo-note">
+        Prices and customer reviews shown here are clearly labelled demo data;
+        they are not verified business prices or customer testimonials.
+      </p>
     </section>
   );
 }

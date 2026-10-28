@@ -6,8 +6,10 @@ const navItems = [
 
 function Navbar({
   cartOpen,
+  cartCount,
   menuOpen,
   onCartOpen,
+  onAccountOpen,
   onMenuClose,
   onMenuToggle,
   onSearchChange,
@@ -49,6 +51,9 @@ function Navbar({
       </nav>
 
       <div className="header-actions">
+        <button aria-label="Open account" className="account-button" onClick={onAccountOpen} type="button">
+          Account
+        </button>
         <button
           aria-expanded={searchOpen}
           aria-label={searchOpen ? "Close product search" : "Search products"}
@@ -62,7 +67,7 @@ function Navbar({
           </svg>
         </button>
         <button
-          aria-label={cartOpen ? "Cart preview open" : "Open cart preview"}
+          aria-label={cartOpen ? `Cart preview open, ${cartCount} items` : `Open cart, ${cartCount} items`}
           className="cart-button"
           onClick={onCartOpen}
           type="button"
@@ -72,7 +77,7 @@ function Navbar({
             <path d="M9 9V6a3 3 0 0 1 6 0v3" />
           </svg>
           <span>Bag</span>
-          <span className="cart-count">00</span>
+          <span className="cart-count">{String(cartCount).padStart(2, "0")}</span>
         </button>
       </div>
 
