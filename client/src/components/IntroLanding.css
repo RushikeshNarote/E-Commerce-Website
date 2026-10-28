@@ -1,0 +1,244 @@
+.legends-intro {
+  --legends-intro-black: #070d0d;
+  --legends-intro-orange: #ff6700;
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  display: grid;
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+  place-items: center;
+  padding:
+    max(24px, env(safe-area-inset-top))
+    max(20px, env(safe-area-inset-right))
+    max(24px, env(safe-area-inset-bottom))
+    max(20px, env(safe-area-inset-left));
+  background: var(--legends-intro-black);
+  color: #fff;
+  opacity: 1;
+  transition:
+    opacity 620ms ease,
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.legends-intro--exiting {
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(1.025);
+}
+
+.legends-intro__ambient,
+.legends-intro__cursor-glow {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+}
+
+.legends-intro__ambient {
+  inset: -18%;
+  background:
+    radial-gradient(ellipse at 50% 52%, rgb(255 103 0 / 12%), transparent 25%),
+    radial-gradient(ellipse at 19% 34%, rgb(255 103 0 / 10%), transparent 24%),
+    radial-gradient(ellipse at 77% 67%, rgb(255 103 0 / 8%), transparent 27%),
+    radial-gradient(ellipse at 53% 7%, rgb(255 103 0 / 5%), transparent 29%);
+  filter: blur(28px);
+  animation: legends-intro-ambient-drift 22s ease-in-out infinite alternate;
+}
+
+.legends-intro__cursor-glow {
+  background: radial-gradient(
+    460px circle at var(--legends-intro-pointer-x, 50%) var(--legends-intro-pointer-y, 50%),
+    rgb(255 103 0 / 13%),
+    rgb(255 103 0 / 5%) 35%,
+    transparent 72%
+  );
+  opacity: 0.85;
+  transition: opacity 400ms ease;
+}
+
+.legends-intro__composition {
+  display: flex;
+  width: min(100%, 560px);
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(-8px);
+}
+
+.legends-intro__logo {
+  width: 100%;
+  max-width: 560px;
+  min-width: 0;
+  flex: 0 1 auto;
+  box-shadow:
+    0 0 52px rgb(255 103 0 / 13%),
+    0 0 110px rgb(255 103 0 / 7%);
+  animation: legends-intro-logo-reveal 1.35s cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
+}
+
+.legends-intro__logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.legends-intro__enter {
+  display: inline-flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: clamp(30px, 5vh, 42px);
+  padding: 0 25px 0 28px;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 5px;
+  background: var(--legends-intro-orange);
+  box-shadow: 0 8px 34px rgb(255 103 0 / 19%);
+  color: var(--legends-intro-black);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  line-height: 1;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    background-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms ease;
+  animation: legends-intro-rise-in 900ms cubic-bezier(0.22, 1, 0.36, 1) 880ms both;
+}
+
+.legends-intro__enter svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+  transition: transform 200ms ease;
+}
+
+.legends-intro__enter:hover:not(:disabled) {
+  background: #ff7920;
+  box-shadow: 0 10px 40px rgb(255 103 0 / 31%);
+  transform: translateY(-3px);
+}
+
+.legends-intro__enter:hover:not(:disabled) svg {
+  transform: translateX(3px);
+}
+
+.legends-intro__enter:active:not(:disabled) {
+  transform: translateY(-1px) scale(0.985);
+}
+
+.legends-intro__enter:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 5px;
+}
+
+.legends-intro__enter:disabled {
+  cursor: wait;
+}
+
+.legends-intro__caption {
+  position: absolute;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(19px, env(safe-area-inset-bottom));
+  left: max(20px, env(safe-area-inset-left));
+  margin: 0;
+  color: rgb(255 255 255 / 42%);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  line-height: 1.5;
+  text-align: center;
+  animation: legends-intro-rise-in 900ms cubic-bezier(0.22, 1, 0.36, 1) 1.1s both;
+}
+
+@keyframes legends-intro-ambient-drift {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(1.5%, 2%, 0) scale(1.045);
+  }
+  100% {
+    transform: translate3d(2%, -1.5%, 0) scale(1.015);
+  }
+}
+
+@keyframes legends-intro-logo-reveal {
+  from {
+    opacity: 0;
+    filter: blur(14px);
+    transform: translateY(12px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes legends-intro-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(13px);
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+}
+
+@media (max-width: 480px) {
+  .legends-intro__composition {
+    transform: translateY(-2px);
+  }
+
+  .legends-intro__enter {
+    min-height: 52px;
+    gap: 16px;
+    padding-right: 20px;
+    padding-left: 22px;
+    font-size: 0.68rem;
+  }
+}
+
+@media (max-height: 560px) {
+  .legends-intro__composition {
+    transform: translateY(-8px) scale(0.84);
+  }
+
+  .legends-intro__enter {
+    min-height: 48px;
+    margin-top: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .legends-intro *,
+  .legends-intro *::before,
+  .legends-intro *::after {
+    animation-delay: 0ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .legends-intro__ambient {
+    animation: none;
+  }
+}

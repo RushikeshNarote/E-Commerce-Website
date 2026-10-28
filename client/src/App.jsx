@@ -12,8 +12,68 @@ import { useAccount } from "./hooks/useAccount.js";
 import AccountDialog from "./components/AccountDialog.jsx";
 import { products } from "./data/products.js";
 import { getProductReviews } from "./utils/reviews.js";
+import IntroLanding from "./components/IntroLanding.jsx";
 
 function App() {
+  const [storeEntered, setStoreEntered] = useState(() => {
+    const state = window.history.state;
+    return (
+      state?.legendsIntroStore === true ||
+      window.location.pathname !== "/" ||
+      Boolean(window.location.hash)
+    );
+  });
+  const [isExiting, setIsExiting] = useState(false);
+
+  useEffect(() => {
+    if (!isExiting) return undefined;
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const timer = window.setTimeout(() => {
+      const currentState = window.history.state;
+      window.history.pushState(
+        {
+          ...(currentState && typeof currentState === "object"
+            ? currentState
+            : {}),
+          legendsIntroStore: true,
+        },
+        "",
+        window.location.href,
+      );
+      setStoreEntered(true);
+    }, reducedMotion ? 0 : 650);
+
+    return () => window.clearTimeout(timer);
+  }, [isExiting]);
+
+  useEffect(() => {
+    function handlePopState(event) {
+      setIsExiting(false);
+      setStoreEntered(
+        event.state?.legendsIntroStore === true ||
+          window.location.pathname !== "/" ||
+          Boolean(window.location.hash),
+      );
+    }
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  if (storeEntered) return <Storefront />;
+
+  return (
+    <IntroLanding
+      isExiting={isExiting}
+      onEnter={() => setIsExiting(true)}
+    />
+  );
+}
+
+function Storefront() {
   const cart = useCart();
   const account = useAccount();
   const [menuOpen, setMenuOpen] = useState(false);
